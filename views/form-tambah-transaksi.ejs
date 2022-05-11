@@ -1,0 +1,368 @@
+
+    <style>
+        .ttl{
+            border-bottom: 3px solid #9e8cff;
+        }
+        .harga-total{
+            color: #340086
+        }
+        .total{
+            border-bottom: 2px solid #340086;
+        }
+        .title-section{
+            background-color: #9e8cff;
+        }
+    </style>
+
+    <!-- title section -->
+    <div class="container-fluid title-section">
+        <div class="container pt-5 pb-5">
+            <h1>Halaman tambah transaksi <i class="bi bi-cart-plus"></i></h1>
+            <small >halaman untuk emnambah transaksi oleh admond</small>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="container py-4">
+            <h2 class="ttl d-inline-block">Silahkan isi bidah dibawah ini</h2>
+        </div>
+    </div>
+
+    <form action="../proses/create/transaksi" method="post">
+        <!-- untuk pilih member -->
+        <div class="conatiner-fluid">
+            <div class="container py-4">
+                <h4><strong>Pilih member</strong></h4>
+                <table class="table table-member">
+                    <thead>
+                        <tr>
+                            <th>Pilih</th>
+                            <th>Nama</th>
+                            <th>No telp</th>
+                            <th>Alamat</th>
+                            <th>Jenis Kelamin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="radio" name="id_member" value="1" class="form-check-input"></td>
+                            <td>Zidan Putra</td>
+                            <td>08977632</td>
+                            <td>bagorejo, srono</td>
+                            <td>Laki-laki</td>
+                        </tr>
+                        <% member.forEach(mbr => { %>
+                            <tr>
+                                <td><input type="radio" name="id_member" value="<%= mbr.id %> " class="form-check-input"></td>
+                                <td><%= mbr.nama %> </td>
+                                <td><%= mbr.tlp %> </td>
+                                <td><%= mbr.alamat %> </td>
+                                <td><%= mbr.jenis_kelamin == "L" ? "Laki-laki" : "perempuan" %> </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- untuk pilih paket -->
+        <div class="container-fluid">
+            <div class="container py-4">
+                <h4 class="py-3"><strong>Pilih paket</strong></h4>
+
+                <div class="row row-cols-md-4 row-cols-sm-2 gy-5">
+                    <div class="col">
+                        <div class="card border-dark" style="width: 18rem;" id="ckbx">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <strong class="mb-0">Paket komplit</strong> <!--nama paket-->
+                                    <input class="form-check-input" type="checkbox" value="1" data-harga="12000" data-name="paket komplit"><!--inputs-->
+                                </li>
+                            </ul>
+                            <div class="card-body">
+                                <h1 class="text-center"><i class="bi bi-box"></i></strong></h1>
+                                <strong><i class="bi bi-shop"></i> outlet jaya barokah</strong>
+                                <p class="mb-0"><i class="bi bi-arrow-right-circle-fill"></i> Kiloan</p>
+                                <p><i class="bi bi-cash-coin"></i> 12.000</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <% paket.forEach(pk => { %>
+                        <div class="col">
+                            <div class="card border-dark" style="width: 18rem;" id="ckbx">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <strong class="mb-0"><%= pk.nama_paket %> </strong> <!--nama paket-->
+                                        <input class="form-check-input" type="checkbox" value="<%= pk.id %>" data-harga="<%= pk.harga %> " data-name="<%= pk.nama_paket %> " name="id_paket[]"><!--inputs-->
+                                    </li>
+                                </ul>
+                                <div class="card-body">
+                                    <h1 class="text-center"><i class="bi bi-box"></i></strong></h1>
+                                    <strong><i class="bi bi-shop"></i> <%= pk.outlet.nama %> </strong>
+                                    <p class="mb-0"><i class="bi bi-arrow-right-circle-fill"></i> <%= pk.jenis %> </p>
+                                    <p><i class="bi bi-cash-coin"></i> <%= pk.harga %> </p>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- untuk input jumlah paket -->
+        <!-- jangan lupa untuk membuat validasi -->
+        <div class="container-fluid">
+            <div class="container py-4">
+                <h4 ><strong>Jumlah barang</strong></h4>
+
+                <table class="table container-paket">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nama paket</th>
+                            <th scope="col">Harga</th>
+                            <th scope="col">Jumlah</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>paket komplit</td>
+                            <td>12.000</td>
+                            <td>
+                                <input type="text" name="paket" data-id="123" value="0" class="form-control">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- untuk tanggal -->
+        <div class="container-fluid">
+            <div class="container py-4">
+                <h4><strong>Tanggal transaksi</strong></h4>
+
+                <div class="mt-2">
+                    <label for="">Tanggal Bayar</label>
+                    <input type="date" id="bayar" name="tgl_bayar">
+                </div>
+                <div class="mt-2">
+                    <label for="tenggat">Batas waktu</label>
+                    <input type="date" id="tenggat" name="batas_waktu">
+                </div>
+                <div class="mt-2">
+                    <label for="tg;">Tanggal transaksi</label>
+                    <input type="date" id="tgl" name="tgl" value="">
+                </div>
+            </div>
+        </div>
+
+        <!-- untuk biaya tambahan -->
+        <div class="container-fluid">
+            <div class="container py-4">
+                <h4><strong>Biaya transaksi</strong></h4>
+
+                <div class="form">
+                    <div class="mb-3 row">
+                        <label for="staticbiaya" class="col-sm-2 col-form-label">Biaya Tambahan</label>
+                        <div class="col-sm-10">
+                        <input name="biaya_tambahan" type="number" class="form-control" id="staticbiaya" value="0">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="pajak" class="col-sm-2 col-form-label">Pajak</label>
+                        <div class="col-sm-10">
+                        <input type="number" class="form-control" id="pajak" name="pajak" value="0">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="diskon" class="col-sm-2 col-form-label">Diskon <small>(dalam persen)</small></label>
+                        <div class="col-sm-10">
+                        <input name="diskon" type="number" class="form-control" id="diskon" placeholder="dalam persen" value="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- untuk status -->
+        <div class="container-fluid">
+            <div class="container py-4">
+                <h4><strong>Status</strong></h4>
+                <div class="form">
+                    <div class="mb-3 row">
+                        <label  class="col-sm-2 col-form-label">Dibayar</label>
+                        <div class="col-sm-10">
+                            <select class="form-select" name="dibayar">
+                                <option value="belum_dibayar"selected>Belum bayar</option>
+                                <option value="dibayar">Dibayar</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label  class="col-sm-2 col-form-label">Status</label>
+                        <div class="col-sm-10">
+                            <select class="form-select" name="status" >
+                                <option value="baru"selected>Baru</option>
+                                <option value="proses">Proses</option>
+                                <option value="selesai">Selesai</option>
+                                <option value="diambil">Diambil</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- untuk total -->
+        <div class="conatiner-fluid">
+            <div class="container py-4">
+                <div class="d-flex justify-content-between">
+                    <div class="total">
+                        <h3>
+                            total : <span class="harga-total">200.000</span>
+                        </h3>
+                    </div>
+                    <div class="submit">
+                        <button class="btn btn-success"><strong>Submit </strong><i class="bi bi-arrow-up-right"></i></button>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+        <input type="hidden" name="id_user">
+    </form>
+
+
+
+
+
+    <script>
+        let paket = [];
+        let containerPaket = document.querySelector('.container-paket tbody');
+
+        //unntuk menjadikan table member sebagai tempat klik
+        let userRows = document.querySelectorAll('.table-member tbody tr');
+        userRows.forEach((row) => {
+            row.addEventListener('click', (e) => {
+                let rad = row.querySelector('[type="radio"]');
+                if(e.target != rad){
+                    rad.checked = rad.checked ? false : true;
+                }
+
+            })
+        })
+
+        //untuk cardsuapay dapat dijadikan tempat clik
+        let cards = document.querySelectorAll('.card');
+        cards.forEach(function(card){
+            card.addEventListener('click',(e) => {
+                let rad = card.querySelector('[type="checkbox"]');
+                if(e.target != rad){
+                    rad.checked = rad.checked ? false : true ;
+                }
+                
+                if(rad.checked){
+                    let data = {
+                        idPaket: rad.getAttribute('value'),//value ini adalh id paket
+                        nmPaket: rad.getAttribute('data-name'),
+                        harga: rad.getAttribute('data-harga')
+                    }
+                    plusPaket(data);
+                    console.log(paket);
+                    tampilPaket();
+                }else{
+                    rermovePaket(rad.getAttribute('value'));
+                    console.log(paket);
+                    tampilPaket();
+                }   
+                renderTotal();
+            })
+        })
+
+
+        //untuk menambah paket
+        function plusPaket({idPaket, nmPaket, harga}){ //value disi digunakan sebagai id
+            paket.push([idPaket, nmPaket, harga]);
+            paket = bubbleSort(paket)
+        }
+        
+        //untuk menghapus paket
+        function rermovePaket(idPaket){
+            for( var i = 0; i < paket.length; i++){  
+                if ( paket[i][0] === idPaket) { 
+                    paket.splice(i, 1); 
+                    i--; 
+                }
+            }
+        }
+
+        function bubbleSort(arr){
+            //Outer pass
+            for(let i = 0; i < arr.length; i++){
+                //Inner pass
+                for(let j = 0; j < arr.length - i - 1; j++){
+                    //Value comparison using ascending order
+                    if(arr[j + 1][0] < arr[j][0]){
+                        //Swapping
+                        [arr[j + 1],arr[j]] = [arr[j],arr[j + 1]]
+                    }
+                }
+            };
+            return arr;
+        };
+
+        //fungsi untuk mengubah data array paket menjadi data tampil
+        function tampilPaket(){
+            let tempPaket = paket.map( paket => {
+                let str = `<tr>
+                        <td>1</td>
+                        <td>${paket[1]}</td>
+                        <td>${paket[2]}</td>
+                        <td>
+                            <input type="number" name="qty[]" value="${paket[3] ? paket[3] : 0}" class="form-control inp-paket" data-harga="${paket[2]}" >
+                        </td>
+                        </tr>`
+                
+                return [paket[0], str]
+            })
+            containerPaket.innerHTML = tempPaket.map(a => a[1]).join('');
+        }
+
+
+        //untuk menghitung nilai total
+        function renderTotal(){
+            let total = 0;
+            document.querySelectorAll('input:not([type="radio"],[type="checkbox"],[type="date"],.diskon)').forEach(inp => {
+                if(inp.getAttribute("name") == "qty[]"){
+                    total += (parseInt(inp.getAttribute("data-harga")) * parseInt(inp.value))
+                }else{
+                    total += parseInt(inp.value == '' ? 0 : inp.value);
+                }
+                inp.addEventListener('change', function(e){
+                    renderTotal()
+                })
+
+            })
+            document.querySelector('.harga-total').innerHTML = total;
+            console.log(typeof total);
+            total = 0;
+        }
+        renderTotal();
+
+        // //set tanggal sekarang
+        document.querySelector('#tgl').value = new Date().toLocaleDateString('en-CA').replace(/\//g, "-")
+
+
+        //untuk akses form
+        // let form = document.getElementsByTagName('form')[0];
+        // form.addEventListener('submit', e => {
+        //     e.preventDefault();
+        //     let pkt = form.elements['qty[]'];
+        //     console.log(pkt)
+        // })
+    </script>

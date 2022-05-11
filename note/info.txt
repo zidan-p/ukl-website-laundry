@@ -1,0 +1,245 @@
+untuk mendapatkan nilai array check box
+1. buat beberapa checbox dengan nama yang sama
+2. ingat selalu akhiri nama yang sama tersebut dengan kurung siku([])
+3. secara otomatis data yang dikirim akan berupa array <di php>
+
+bila hanya nama yang sama maka akan diambil nilay yang paling akhir <di php>
+
+--- perlu diingat saya mengambila nilai ini menggunakan php
+entah mungkin lain halnya jika menggunakaan express ---
+
+
+        let paket = [];
+        let containerPaket = document.querySelector('.container-paket tbody');
+
+        //unntuk menjadikan table member sebagai tempat klik
+        let userRows = document.querySelectorAll('.table-member tbody tr');
+        userRows.forEach((row) => {
+            row.addEventListener('click', (e) => {
+                let rad = row.querySelector('[type="radio"]');
+                if(e.target != rad){
+                    rad.checked = rad.checked ? false : true;
+                }
+
+            })
+        })
+
+        //untuk cardsuapay dapat dijadikan tempat clik
+        let cards = document.querySelectorAll('.card');
+        cards.forEach(function(card){
+            card.addEventListener('click',(e) => {
+                let rad = card.querySelector('[type="checkbox"]');
+                if(e.target != rad){
+                    rad.checked = rad.checked ? false : true ;
+                }
+                
+                if(rad.checked){
+                    let data = {
+                        idPaket: rad.getAttribute('value'),//value ini adalh id paket
+                        nmPaket: rad.getAttribute('data-name'),
+                        harga: rad.getAttribute('data-harga')
+                    }
+                    plusPaket(data);
+                    console.log(paket);
+                    tampilPaket();
+                }else{
+                    rermovePaket(rad.getAttribute('value'));
+                    console.log(paket);
+                    tampilPaket();
+                }   
+
+            })
+        })
+
+
+        //untuk menambah paket
+        function plusPaket({idPaket, nmPaket, harga}){ //value disi digunakan sebagai id
+            // jika memungkinkan, akan digunakan fecth untuk mengambil data
+            // let str = `<tr>
+            //             <td>1</td>
+            //             <td>${nmPaket}</td>
+            //             <td>${harga}</td>
+            //             <td>
+            //                 <input type="text" name="id:{${idPaket}}" value="0" class="form-control inp-paket" >
+            //             </td>
+            //             </tr>`
+
+
+            paket.push([idPaket, nmPaket, harga]);
+        }
+        
+        //untuk menghapus paket
+        function rermovePaket(idPaket){
+            for( var i = 0; i < paket.length; i++){  
+                if ( paket[i][0] === idPaket) { 
+                    paket.splice(i, 1); 
+                    i--; 
+                }
+            }
+        }
+
+        //fungsi untuk render ulang selector setiap perubahan data pada input paket
+        function reRender(){
+            let inputPaket = document.querySelectorAll('.inp-paket');
+            inputPaket.forEach(inputPaket => {
+                inputPaket.addEventListener('change', function(e){
+                    let data = {
+                        idPaket : inputPaket.getAttribute('data-id'),
+                        val : inputPaket.getAttribute('value')
+                    }
+                    updatePaket(data)
+                })
+            })
+        }
+
+
+        
+        //fungsi untuk mengubah data array paket menjadi data tampil
+        function tampilPaket(){
+            let tempPaket = paket.map( paket => {
+                let str = `<tr>
+                        <td>1</td>
+                        <td>${nmPaket}</td>
+                        <td>${harga}</td>
+                        <td>
+                            <input type="text" name="id:{${idPaket}}" value="0" class="form-control inp-paket" >
+                        </td>
+                        </tr>`
+                
+                return [paket.idPaket, str]
+            })
+            containerPaket.innerHTML = tempPaket.map(a => a[1]).join('');
+        }
+
+        //untuk mengupdate paket
+        function updatePaket({idPaket, val}){
+            paket = paket.map(arr => {
+                if(arr[0] == idPaket){
+                    let str = `<tr>
+                        <td>1</td>
+                        <td>${nmPaket}</td>
+                        <td>${harga}</td>
+                        <td>
+                            <input type="text" name="id:{${idPaket}}" value="0" class="form-control inp-paket" >
+                        </td>
+                        </tr>`;
+                    return [idPaket, str]
+                }
+                return arr
+            
+            });
+            tampilPaket();
+        }
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+        let paket = [];
+        let containerPaket = document.querySelector('.container-paket tbody');
+
+        //unntuk menjadikan table member sebagai tempat klik
+        let userRows = document.querySelectorAll('.table-member tbody tr');
+        userRows.forEach((row) => {
+            row.addEventListener('click', (e) => {
+                let rad = row.querySelector('[type="radio"]');
+                if(e.target != rad){
+                    rad.checked = rad.checked ? false : true;
+                }
+
+            })
+        })
+
+        //untuk cardsuapay dapat dijadikan tempat clik
+        let cards = document.querySelectorAll('.card');
+        cards.forEach(function(card){
+            card.addEventListener('click',(e) => {
+                let rad = card.querySelector('[type="checkbox"]');
+                if(e.target != rad){
+                    rad.checked = rad.checked ? false : true ;
+                }
+                
+                if(rad.checked){
+                    let data = {
+                        idPaket: rad.getAttribute('value'),//value ini adalh id paket
+                        nmPaket: rad.getAttribute('data-name'),
+                        harga: rad.getAttribute('data-harga')
+                    }
+                    plusPaket(data);
+                    console.log(paket);
+                    tampilPaket();
+                    // reRender();
+                }else{
+                    rermovePaket(rad.getAttribute('value'));
+                    console.log(paket);
+                    tampilPaket();
+                    // reRender();
+                }   
+
+            })
+        })
+
+
+        //untuk menambah paket
+        function plusPaket({idPaket, nmPaket, harga}){ //value disi digunakan sebagai id
+            paket.push([idPaket, nmPaket, harga]);
+        }
+        
+        //untuk menghapus paket
+        function rermovePaket(idPaket){
+            for( var i = 0; i < paket.length; i++){  
+                if ( paket[i][0] === idPaket) { 
+                    paket.splice(i, 1); 
+                    i--; 
+                }
+            }
+        }
+
+        //fungsi untuk render ulang selector setiap perubahan data pada input paket
+        function reRender(){
+            let inputPaket = document.querySelectorAll('.inp-paket');
+            inputPaket.forEach(inputPaket => {
+                inputPaket.addEventListener('change', function(e){
+                    let data = {
+                        idPaket : inputPaket.getAttribute('data-id'),
+                        val : inputPaket.getAttribute('value')
+                    }
+                    console.log(data)
+                    console.log(inputPaket)
+                    updatePaket(data)
+                })
+            })
+        }
+
+
+        
+        //fungsi untuk mengubah data array paket menjadi data tampil
+        function tampilPaket(){
+            let tempPaket = paket.map( paket => {
+                let str = `<tr>
+                        <td>1</td>
+                        <td>${paket[1]}</td>
+                        <td>${paket[2]}</td>
+                        <td>
+                            <input type="text" name="id:${paket[0]}" value="${paket[3] ? paket[3] : 0}" class="form-control inp-paket" >
+                        </td>
+                        </tr>`
+                
+                return [paket.idPaket, str]
+            })
+            containerPaket.innerHTML = tempPaket.map(a => a[1]).join('');
+
+            reRender();
+        }
+
+        //untuk mengupdate paket
+        function updatePaket({idPaket, val}){
+            paket = paket.map(arr => {
+                if(arr[0] == idPaket){
+                    arr.push(val)
+                    return arr
+                }
+                return arr
+            
+            });
+            tampilPaket();
+        }

@@ -1,0 +1,22 @@
+{
+    "err": {
+        "name": "SequelizeDatabaseError",
+        "parent": {
+            "code": "ER_BAD_FIELD_ERROR",
+            "errno": 1054,
+            "sqlState": "42S22",
+            "sqlMessage": "Unknown column 'tb_detail_transaksi.id_outlet' in 'where clause'",
+            "sql": "SELECT `id`, `id_transaksi`, `id_paket`, `qty`, `keterangan` FROM `tb_detail_transaksi` AS `tb_detail_transaksi` WHERE `tb_detail_transaksi`.`id_outlet` = '16';"
+        },
+        "original": {
+            "code": "ER_BAD_FIELD_ERROR",
+            "errno": 1054,
+            "sqlState": "42S22",
+            "sqlMessage": "Unknown column 'tb_detail_transaksi.id_outlet' in 'where clause'",
+            "sql": "SELECT `id`, `id_transaksi`, `id_paket`, `qty`, `keterangan` FROM `tb_detail_transaksi` AS `tb_detail_transaksi` WHERE `tb_detail_transaksi`.`id_outlet` = '16';"
+        },
+        "sql": "SELECT `id`, `id_transaksi`, `id_paket`, `qty`, `keterangan` FROM `tb_detail_transaksi` AS `tb_detail_transaksi` WHERE `tb_detail_transaksi`.`id_outlet` = '16';",
+        "parameters": {}
+    },
+    "msg": "data gagal diubah"
+}

@@ -1,0 +1,169 @@
+    <style>
+        .hello{
+            background-color: #9e8cff;
+            
+        }
+
+        .onscroll h1{
+            font-size: 65px;
+        }
+
+        .bg_text{
+            box-shadow: inset 0 0 0 0 #340086;
+            display: block;
+            color: #340086;
+            transition: all 1s ease-in-out;
+        }
+        .admin{
+            padding: 15px;
+        }
+        .animate{
+            box-shadow: inset 222px 0 0 0 #340086;
+            color: white;
+        }
+
+
+
+        /* untuk card*/
+        .btnn{
+            background: none;
+            text-decoration: none;
+            border-radius: 5px;
+            font: inherit;
+            line-height: 1;
+            padding: .5em 1em;
+            transition: 0.25s;
+            color: inherit;
+        }
+
+        .btnn:hover{
+            box-shadow: inset 6.5em 0 0 0 #340086;
+            color: white;
+        }
+
+        .card{
+            transition: all 1s ease-in-out;
+        }
+
+        .card-animate{
+            box-shadow: inset 300px 0 0 0 #340086;
+            color: #340086;
+        }
+    </style>
+
+    <!-- untuk halo admin -->
+    <div class="container-fluid hello">
+        <div class="container py-5">
+            <div class="onscroll">
+                <h1>
+                    <span class="bg_text">Selamat datang</span>
+                    <span class="bg_text admin">Admin</span>
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- untuk card -->
+    <div class="container-fluid for-card py-5">
+        <div class="container">
+            <div class="row row-cols-md-4 row-cols-sm-2" >
+
+                <!-- daftar cardnya -->
+                <div class="col">
+                    <div class="card card-animate" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah paket</h5>
+                            <h1><strong><%= banyakPaket %> </strong></h1>
+                            <a href="#" class="btnn float-end">Card link</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-animate" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah outlet</h5>
+                            <h1><strong><%= banyakOutlet %> </strong></h1>
+                            <a href="#" class="btnn float-end">Card link</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-animate" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah admin</h5>
+                            <h1><strong><%= banyakUser %> </strong></h1>
+                            <a href="#" class="btnn float-end">Card link</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-animate" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah transaksi terbaru</h5>
+                            <h1><strong><%= banyakTransaksi %> </strong></h1>
+                            <a href="#" class="btnn float-end">Card link</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- untuk tabel 10 transaksi pertama -->
+    <div class="container-fluid for-table py-5">
+        <div class="container">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
+                <h3>daftar 10 transaksi terbaru</h3>
+                <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-printer"></i> print</a>
+            </div>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">kode invoive</th>
+                    <th scope="col">tanggal</th>
+                    <th scope="col">nama</th>
+                    <th scope="col">harga</th>
+                    <th scope="col">jumlah barang</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ivn-20220431</td>
+                        <td>13 - april 2022</td>
+                        <td>budi</td>
+                        <td>50.000</td>
+                        <td>12 item</td>
+                    </tr>
+                    <% transaksi.forEach(tr => { %>
+                        <% 
+                        let harga = 0;
+                        tr.detail_transaksi.forEach(dt=> {
+                            harga += (dt.qty * dt.paket.harga)
+                        })
+                        %>
+                    <tr>
+                        <td><%- tr.kode_invoice %></td>
+                        <td><%- tr.tgl.slice(0,10)%></td>
+                        <td><%- tr.member.nama   %></td>
+                        <td><%= harga %> </td>
+                        <td><%- tr.detail_transaksi.length  %> item</td>
+                    </tr>
+
+                    <% }) %>
+                </tbody>
+              </table>
+        </div>
+    </div>
+
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script>
+        $(document).ready(() => {
+                $('.admin').addClass('animate');
+                $('.card').removeClass('card-animate');
+            }
+        )
+
+        //untuk langsung mengeprint
+        
+    </script>

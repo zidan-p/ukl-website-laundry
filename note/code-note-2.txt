@@ -1,0 +1,42 @@
+{
+    "id_outlet" : 1,
+    "kode_invoice" : "123andamenang",
+    "id_member" : 1,
+    "tgl" : "2022-04-15",
+    "batas_waktu" : "2022-04-15",
+    "tgl_bayar" : "2022-04-15",
+    "biaya_tambahan" : 1000,
+    "diskon" : 0.5,
+    "pajak" : 2000,
+    "status" : "baru",
+    "dibayar" : "dibayar",
+    "id_user" : 7
+}
+
+------------------------------------------------
+{
+    "id_outlet" : 1,
+    "id_member" : 1,
+    "batas_waktu" : "2022-04-15",
+    "tgl_bayar" : "2022-04-15",
+    "biaya_tambahan" : 2000,
+    "diskon" : 0.5,
+    "pajak" : 10000,
+    "status" : "baru",
+    "dibayar" : "belum_dibayar",
+    "id_user" : 7,
+    "detail_transaksi" : [
+        {
+            "id_paket" : 1,
+            "qty": 3,
+            "keterangan" : "goood"
+        },
+        {
+            "id_paket" : 7,
+            "qty": 5,
+            "keterangan" : "goood++"
+        }
+    ]
+}
+
+----------------------------------------------------------

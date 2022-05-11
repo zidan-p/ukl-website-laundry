@@ -1,0 +1,28 @@
+{
+  "name": "laundry-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "zidan putra rahman",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "body-parser": "^1.20.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "ejs": "^3.1.7",
+    "express": "^4.17.3",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "md5": "^2.3.0",
+    "mysql2": "^2.3.3",
+    "nodemon": "^2.0.15",
+    "sequelize": "^6.16.1"
+  }
+}

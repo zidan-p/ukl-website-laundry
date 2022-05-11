@@ -1,0 +1,351 @@
+
+    <style>
+        .wapper{
+            border-bottom: 3px solid balck;
+        }
+        .title-section{
+          background-color: #9e8cff;
+        }
+    </style>
+    <!-- title section -->
+    <div class="container-fluid title-section">
+        <div class="container pt-5 pb-5">
+            <h1>Halaman daftar transaksi <i class="bi bi-cart4"></i></h1>
+            <small >halaman tempat daftar riwayat transaksi, juga bisa digunakan untuk menambah transaksi</small>
+        </div>
+    </div>
+
+    <!-- card general info section -->
+    <div class="card-section container-fluid">
+        <div class="container py-5">
+            <div class="row row-cols-md-4 row-cols-sm-2" >
+
+
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah transaksi</h5>
+                            <h1><strong><%= transaksi.length %> </strong></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah detail transaksi</h5>
+                            <% let jml_detail = 0;
+                               transaksi.forEach(tr => {
+                                   jml_detail += tr.detail_transaksi.length
+                               });
+                            %> 
+                            <h1><strong><%= jml_detail %> </strong></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Transaksi dibayar</h5>
+                            <h1><strong><%= transaksi.filter(tr =>tr.dibayar == 'dibayar').length %> 
+                            
+                            </strong></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Belum dibayar</h5>
+                            <h1><strong><%= transaksi.filter(tr => tr.dibayar == 'belum_dibayar').length %> </strong></h1>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- transaksi section -->
+    <div class="contaier-fluid person-section">
+        <div class="container py-5">
+            <div class="wapper d-flex justify-content-between align-items-center">
+                <h2>Daftar semua Transaksi</h2>
+                <a href="./create/transaksi" class="btn btn-success me-3">Tambah <i class="bi bi-cart-plus"></i></i></a>
+            </div>
+        </div>
+        <div class="container container-card-re">
+            <div class="row row-cols-md-4 row-cols-sm-2 gy-5">
+
+                <div class="col">
+                    <div class="card border-dark" style="width: 18rem;">
+                        <ul class="list-group list-group-flush">
+                          <li class="list-group-item d-flex justify-content-between">
+                              <strong class="mb-0">14 - maret - 2022</strong>
+                              <a href="#" class="btn btn-danger btn-sm">X</a>
+                            </li>
+                        </ul>
+                        <div class="card-body">
+                            <h1 class="text-center"><strong><i class="bi bi-cart4"></i></strong></h1>
+                            <strong><i class="bi bi-person-fill"></i> Zidan Putra</strong>
+                            <p class="mb-0"><i class="bi bi-upc"></i> inv-200311</p>
+                            <p class="mb-0"><i class="bi bi-hourglass"></i> 13 - maret - 2022</p>
+                            <p class="mb-0"><i class="bi bi-diamond-half"></i> baru</p>
+                            <p class=""><i class="bi bi-cash"></i> dibayar</p>
+                            <a href="#" class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i> Edit</a>
+                            <button class="btn btn-sm btn-primary" data-idOutlet="1234" data-bs-toggle="modal" data-bs-target="#modalinfo">
+                                <i class="bi bi-info-circle"></i> Info
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <% transaksi.forEach(tr => { %>
+
+                <div class="col">
+                        <div class="card border-dark" style="width: 18rem;">
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item d-flex justify-content-between">
+                                  <strong class="mb-0"><%= tr.tgl.slice(0,10) %> </strong>
+                                  <button class="btn btn-danger btn-sm btn-delete" data-idTransaksi="<%- tr.id %> ">X</button>
+                                </li>
+                            </ul>
+                            <div class="card-body">
+                                <h1 class="text-center"><strong><i class="bi bi-cart4"></i></strong></h1>
+                                <strong><i class="bi bi-person-fill"></i> <%= tr.member.nama %> </strong>
+                                <p class="mb-0"><i class="bi bi-upc"></i> <%= tr.kode_invoice %> </p>
+                                <p class="mb-0"><i class="bi bi-hourglass"></i> <%= tr.batas_waktu.slice(0,10) %> </p>
+                                <p class="mb-0"><i class="bi bi-diamond-half"></i> <%= tr.status %> </p>
+                                <p class=""><i class="bi bi-cash"></i> <%= tr.dibayar %> </p>
+                                <a href="update/transaksi/<%= tr.id %> " class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i> Edit</a>
+                                <button class="btn btn-sm btn-primary info-btn" data-idTransaksi="<%= tr.id %> " data-bs-toggle="modal" data-bs-target="#modalinfo">
+                                    <i class="bi bi-info-circle"></i> Info
+                                </button>
+                            </div>
+                        </div>
+                </div>
+                
+                <% }) %> 
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- untuk modal -->
+    <div class="modal fade" tabindex="-1" id="modalinfo">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">12 - maret - 2022</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid mb-4">
+                    <p><strong>Informasi</strong></p>
+                    <table id="info-table">
+                        <tr>
+                            <td>Kode Invoice :</td>
+                            <td>inv-20220312</td>
+                        </tr>
+                        <tr>
+                            <td>outle</td>
+                            <td>outlet jaya</td>
+                        </tr>
+                        <tr>
+                            <td>Member :</td>
+                            <td>budi rusdianto</td>
+                        </tr>
+                        <tr>
+                            <td>tanggal :</td>
+                            <td>12 - maret - 20019</td>
+                        </tr>
+                        <tr>
+                            <td>batas waktu :</td>
+                            <td>16 - maret 2019</td>
+                        </tr>
+                        <tr>
+                            <td>tanggal bayar :</td>
+                            <td>15 - maret 2019</td>
+                        </tr>
+                        <tr>
+                            <td>biaya tambahan : </td>
+                            <td>2.000</td>
+                        </tr>
+                        <tr>
+                            <td>Pajak : </td>
+                            <td>15%</td>
+                        </tr>
+                        <tr>
+                            <td>Status : </td>
+                            <td>selesai</td>
+                        </tr>
+                        <tr>
+                            <td>Dibayar : </td>
+                            <td>dibayar</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="container-fluid">
+                    <h6><strong>Detail transaksi</strong></h6>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Nama paket</th>
+                              <th scope="col">Jenis</th>
+                              <th scope="col">jumlah</th>
+                              <th scope="col">total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="detail-table">
+                            <tr>
+                                <td scope="row">1</td>
+                                <td>paket komplit</td>
+                                <td>kiloan</td>
+                                <td>12</td>
+                                <td>12.000</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">1</td>
+                                <td>paket komplit</td>
+                                <td>kiloan</td>
+                                <td>12</td>
+                                <td>12.000</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">1</td>
+                                <td>paket komplit</td>
+                                <td>kiloan</td>
+                                <td>12</td>
+                                <td>12.000</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">1</td>
+                                <td>paket komplit</td>
+                                <td>kiloan</td>
+                                <td>12</td>
+                                <td>12.000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script>
+
+        //untuk menmahakn event lisatener
+        let info = document.querySelector("#info-table") //untuk wada informasi transaksi
+        let detail = document.querySelector('#detail-table') //untuk wadah detail transaksi
+        let containerCard = document.querySelector('.container-card-re'); //elemet yng akan diberi event listener
+        containerCard.addEventListener('click',(e)=>{
+
+            //untuk menampilkan moddal
+            if(e.target.className == "btn btn-sm btn-primary info-btn"){
+                console.log(e.target)
+
+                let id = e.target.getAttribute('data-idTransaksi');
+                let tr = JSON.parse('<%- JSON.stringify(transaksi) %>');
+                let trt = tr.find(tr => tr.id == id);
+
+                //untuk info pada transaksi
+                let strInfo = `
+                    <tr>
+                        <td>Kode Invoice :</td>
+                        <td>${trt.kode_invoice}</td>
+                    </tr>
+                    <tr>
+                        <td>outle</td>
+                        <td>${trt.outlet.nama}</td>
+                    </tr>
+                    <tr>
+                        <td>Member :</td>
+                        <td>${trt.member.nama}</td>
+                    </tr>
+                    <tr>
+                        <td>tanggal :</td>
+                        <td>${trt.tgl.slice(0,10)}</td>
+                    </tr>
+                    <tr>
+                        <td>batas waktu :</td>
+                        <td>${trt.batas_waktu.slice(0,10)}</td>
+                    </tr>
+                    <tr>
+                        <td>tanggal bayar :</td>
+                        <td>${trt.tgl_bayar.slice(0,10)}</td>
+                    </tr>
+                    <tr>
+                        <td>biaya tambahan : </td>
+                        <td>${trt.biaya_tambahan}</td>
+                    </tr>
+                    <tr>
+                        <td>Diskon : </td>
+                        <td>${Math.floor(trt.diskon * 100)}%</td>
+                    </tr>
+                    <tr>
+                        <td>Pajak : </td>
+                        <td>${trt.pajak}</td>
+                    </tr>
+                    <tr>
+                        <td>Status : </td>
+                        <td>${trt.status}</td>
+                    </tr>
+                    <tr>
+                        <td>Dibayar : </td>
+                        <td>${trt.dibayar}</td>
+                    </tr>
+                    ` 
+                
+                //untuk detai paket transaksi
+                let strDetail = trt.detail_transaksi.map((dt,i) => {
+                    return `
+                    <tr>
+                        <td scope="row">${i+1}</td>
+                        <td>${dt.paket.nama_paket}</td>
+                        <td>${dt.paket.jenis}</td>
+                        <td>${dt.qty}</td>
+                        <td>${dt.paket.harga * dt.qty}</td>
+                    </tr>
+                    `
+                })
+
+                console.log([strInfo,strDetail])
+                //untuk mengubah info dan detail
+                
+                info.innerHTML = strInfo;
+                console.log('innerhtml info diubah')
+
+                if(strDetail.length != 0){
+                    detail.innerHTML = strDetail.join('');
+                    console.log('innerhtml detail diubah')
+                }else{
+                    let str = `<td colspan="4"> <strong class="mx-auto"> tidak ada data :( </strong></td>`
+                    detail.innerHTML = str
+                }
+            }
+            
+            //untuk menghapus paket
+            if(e.target.className == "btn btn-danger btn-sm btn-delete"){
+                console.log(e.target.parentElement.parentElement.parentElement+ "ini adalah card yng akan dihapus");
+                idTransaksi = e.target.getAttribute('data-idTransaksi');
+                if (confirm('yakin ingin menghapus data ini??')) {
+                    //untuk menyembunyikan element
+                    e.target.parentElement.parentElement.parentElement.parentElement.style.display = 'none'; //untuk mendapatkan parent atas yang saya inginkan
+
+                    fetch(`http://localhost:8080/transaksi/${idTransaksi}`, { method: 'DELETE' })
+                        .then(res => alert('data telah dihapus'))
+                        .catch(err => alert("data gagal dihapus"));
+                }
+            }
+        
+        })
+    </script>

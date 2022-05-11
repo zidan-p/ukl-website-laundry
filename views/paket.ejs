@@ -1,0 +1,128 @@
+
+    <style>
+        .wapper{
+            border-bottom: 3px solid balck;
+        }
+        .title-section{
+          background-color: #9e8cff;
+        }
+    </style>
+
+
+    <!-- title section -->
+    <div class="container-fluid title-section">
+        <div class="container pt-5 pb-5">
+            <h1>Halaman daftar paket <i class="bi bi-box-seam"></i></h1>
+            <small >halaman tempat untuk mengatur semua paket pada setiap outlet</small>
+        </div>
+    </div>
+
+    <!-- card general info section -->
+    <div class="card-section container-fluid">
+        <div class="container py-5">
+            <div class="row row-cols-md-4 row-cols-sm-2" >
+
+
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah paket</h5>
+                            <h1><strong><%= paket.length %> </strong></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah paket selimut</h5>
+                            <h1><strong><%= paket.filter(pk => pk.jenis == 'selimut').lenght || 0 %> </strong></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah paket kiloan</h5>
+                            <h1><strong><%= paket.filter(pk => pk.jenis == 'kiloan').lenght || 0 %></strong></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah paket bed cover</h5>
+                            <h1><strong><%= paket.filter(pk => pk.jenis == 'bed_cover').lenght || 0 %></strong></h1>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- paket section -->
+    <div class="contaier-fluid paket-section">
+        <div class="container py-5 ">
+            <div class="wapper d-flex justify-content-between align-items-center">
+                <h2>Daftar semua paket (dibagi berdasarkan outlet)</h2>
+                <a href="./create/paket" class="btn btn-sm btn-success">Tambah <i class="bi bi-plus"></i></a>
+            </div>
+            <hr>
+
+            <% outlet.forEach(outletArr => { %>
+                <div class="container-fluid mt-3">
+                    <h4><%= outletArr.nama %> </h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Nama paket</th>
+                              <th scope="col">Jenis</th>
+                              <th scope="col">Harga</th>
+                              <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% outletArr.paket.forEach((paketArr,i) => { %>
+                                <tr>
+                                    <td><%= i+1 %> </td>
+                                    <td><%= paketArr.nama_paket %> </td>
+                                    <td><%= paketArr.jenis %> </td>
+                                    <td><%- paketArr.harga %></td>
+                                    <td>
+                                        <a href="update/paket/<%= paketArr.id %> " class="btn btn-sm btn-primary">Edit</a> | 
+                                        <button  class="btn btn-sm btn-danger btn-delete" data-idPaket="<%=  paketArr.id %> ">Hapus</button>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            <% }) %>
+
+        </div>
+    </div>
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script>
+
+        //untuk menghapus
+        let containerpaket = document.querySelector('.paket-section');
+            containerpaket.addEventListener('click', function (e) {
+                if (e.target.className == 'btn btn-sm btn-danger btn-delete') { //ini adalah daftar class untuk tombol hapus, saya masuakn semua class karena saya sedang terburu2 dan aras2en
+                    console.log(e.target.parentElement.parentElement);
+
+                    idPaket = e.target.getAttribute('data-idPaket');
+                    if (confirm('yakin ingin menghapus data ini??')) {
+                        //untuk menyembunyikan element
+                        e.target.parentElement.parentElement.style.display = 'none'; //untuk mendapatkan parent atas yang saya inginkan
+
+                        fetch(`http://localhost:8080/paket/${idPaket}`, { method: 'DELETE' })
+                            .then(res => alert('data telah dihapus'))
+                            .catch(err => alert("data gagal dihapus"));
+                    }
+                }
+            })
+    </script>

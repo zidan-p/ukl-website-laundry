@@ -1,0 +1,160 @@
+
+    <style>
+      .title-section{
+          background-color: #9e8cff;
+      }
+    </style>
+
+
+    <!-- title section -->
+    <div class="container-fluid title-section">
+        <div class="container pt-5 pb-5">
+            <h1>Halaman daftar outlet <i class="bi bi-shop"></i></h1>
+            <small >halaman tempat untuk mengatur semua outlet yang terhubung dengan aplikasi ini</small>
+        </div>
+    </div>
+
+    <!-- person card section -->
+    <!-- section yang berisi daata card person -->
+    <div class="contaier-fluid person-section">
+        <div class="container py-5">
+          <div class="wapper d-flex justify-content-between align-items-center">
+              <h2>Daftar semua Outlet </h2>
+              <a href="./create/outlet" class="btn btn-success me-3">Tambah <i class="bi bi-plus"></i></a>
+            </div>
+        </div>
+        
+        <div class="container container-card">
+            <div class="row row-cols-md-4 row-cols-sm-2 gy-5">
+
+
+                <div class="col col-card">
+                    <div class="card border-dark" style="width: 18rem;">
+                        <ul class="list-group list-group-flush">
+                          <li class="list-group-item d-flex justify-content-between">
+                              <strong class="mb-0">Outlet jaya</strong>
+                              <a href="#" class="btn btn-danger btn-sm">X</a>
+                            </li>
+                        </ul>
+                        <div class="card-body">
+                            <h1 class="text-center"><strong><i class="bi bi-shop"></i></strong></h1>
+                            <strong><i class="bi bi-telephone-fill"></i> 08767676767</strong>
+                            <p class=""><i class="bi bi-geo-alt-fill"></i> bagorejo, srono</p>
+                            <a href="#" class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i> Edit</a>
+                            <button class="btn btn-sm btn-primary" data-idOutlet="1234" data-bs-toggle="modal" data-bs-target="#modalinfo">
+                                <i class="bi bi-info-circle"></i> Info
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <% outlet.forEach((outlet_arr) => { %> 
+                  <div class="col col-card">
+                    <div class="card border-dark" style="width: 18rem;">
+                        <ul class="list-group list-group-flush">
+                          <li class="list-group-item d-flex justify-content-between">
+                              <strong class="mb-0"><%= outlet_arr.nama %> </strong>
+                              <button class="btn btn-danger btn-sm btn-delete" data-idOutlet="<%= outlet_arr.id %> ">X</button>
+                            </li>
+                        </ul>
+                        <div class="card-body">
+                            <h1 class="text-center"><strong><i class="bi bi-shop"></i></strong></h1>
+                            <strong><i class="bi bi-telephone-fill"></i> <%= outlet_arr.tlp %> </strong>
+                            <p class=""><i class="bi bi-geo-alt-fill"></i> <%= outlet_arr.alamat %> </p>
+                            <a href="update/outlet/<%= outlet_arr.id %> " class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i> Edit</a>
+                            <button class="btn btn-sm btn-primary button-mdl" data-idOutlet="<%= outlet_arr.id %> " data-bs-toggle="modal" data-bs-target="#modalinfo">
+                                <i class="bi bi-info-circle"></i> Info
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <% }) %> 
+            </div>
+        </div>
+    </div>
+
+    <!-- untuk modal -->
+    <div class="modal fade" tabindex="-1" id="modalinfo">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Outlet jaya</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <h5>Daftar paket</h5>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nama paket</th>
+                    <th scope="col">Jenis</th>
+                    <th scope="col">Harga</th>
+                  </tr>
+                </thead>
+                <tbody id="tabel">
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>paket komplit</td>
+                    <td>kiloan</td>
+                    <td>12.000</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script>
+
+      //untuk modal
+      let buttons = document.querySelectorAll('.button-mdl');
+      buttons.forEach(button => {
+        button.addEventListener('click', async function(e){
+          let idOutlet = this.getAttribute('data-idOutlet');
+          let outlet = JSON.parse('<%- JSON.stringify(outlet) %>'); //ejs tidak dapat di passingkan nilainya secara langsung, harus berupa string dan harus diinisialisasi berupa string pula, oleh karena itu menggunakan JSON.stringify untuk menjadaika strind dan JSON.parse untuk menjadikan object
+          let paket = outlet.find(arr => arr.id == idOutlet).paket;
+          // console.log(paket);
+
+          let str = paket.map((pak,i) => {
+            return `
+                  <tr>
+                    <th scope="row">${i+1}</th>
+                    <td>${pak.nama_paket}</td>
+                    <td>${pak.jenis}</td>
+                    <td>${pak.harga}</td>
+                  </tr>
+            `
+          })
+          if(str.length == 0){ //cek apakah ada isi paket
+            str = `<tr>tidak ada paket tersedia</tr>`
+            document.querySelector('#tabel').innerHTML = str
+          }else{
+            document.querySelector('#tabel').innerHTML = str.join('')
+          }
+        })
+      });
+
+
+      //untuk hapus
+      let containerCard = document.querySelector('.container-card');
+      containerCard.addEventListener('click', function(e){
+        if(e.target.className == 'btn btn-danger btn-sm btn-delete'){ //ini adalah daftar class untuk tombol hapus, saya masuakn semua class karena saya sedang terburu2 dan aras2en
+          console.log(e.target.parentElement.parentElement.parentElement.parentElement);
+
+          idOutlet = e.target.getAttribute('data-idOutlet');
+          if(confirm('yakin ingin menghapus data ini??')){
+            //untuk menyembunyikan element
+            e.target.parentElement.parentElement.parentElement.parentElement.style.display = 'none'; //untuk mendapatkan parent atas yang saya inginkan
+
+            fetch(`http://localhost:8080/outlet/${idOutlet}`, {method: 'DELETE'})
+              .then(res => alert('data telah dihapus'))
+              .catch(err => alert("data gagal dihapus"));
+          }
+        }
+      })
+    </script>

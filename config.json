@@ -1,0 +1,11 @@
+{
+    "define": {
+      "underscored": true,
+      "freezeTableName": true,
+      "charset": "utf8",
+      "dialectOptions": {
+        "collate": "utf8_general_ci"
+      },
+      "timestamps": false
+    }
+}

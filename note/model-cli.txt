@@ -1,0 +1,18 @@
+--- migration cli sequelize ---
+
+sequelize model:create --name tb_transaksi --attributes id:integer,id_outlet:integer,kode_invoice:string,id_member:string,tgl:date,batas_waktu:date,tgl_bayar:date,biaya_tambahan:integer,diskon:double,pajak:integer,status:enum:'{baru,proses,selesai,diambil}',dibayar:enum:'{dibayar,belum_dibayar}',id_user:integer
+sequelize model:create --name tb_detail_transaksi --attributes id:integer,id_transaksi:integer,id_paket:integer,qty:double,keterangan:text
+sequelize model:create --name tb_member --attributes id:integer,nama:string,alamat:text,jenis_kelasmin:enum:'{L,P}',tlp:string
+sequelize model:create --name tb_paket --attributes id:integer,id_outlet:integer,jenis:enum:'{kiloan,selimut,bed_cover,kaos,lain}',nama_paket:string,harga:integer
+sequelize model:create --name tb_outlet --attributes id:integer,nama:string,alamat:text,tlp:string
+sequelize model:create --name tb_user --attributes id:integer,nama:string,username:string,password:text,id_outlet:integer,role:enum:'{admin,kasir,owner}'
+
+
+
+
+
+
+
+
+
+

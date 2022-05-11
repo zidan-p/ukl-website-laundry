@@ -1,0 +1,139 @@
+
+    <style>
+        .title-section{
+            background-color: #9e8cff;
+        }
+    </style>
+
+    <!-- title section -->
+    <div class="container-fluid title-section">
+        <div class="container pt-5 pb-5">
+            <h1>Halaman daftar member <i class="bi bi-person-plus-fill"></i></h1>
+            <small >halaman tempat untuk member registrasi, dan ngatur semua data member</small>
+        </div>
+    </div>
+
+    <!-- card general info section -->
+    <div class="card-section container-fluid">
+        <div class="container py-5">
+            <div class="row row-cols-md-4 row-cols-sm-2" >
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah member</h5>
+                            <h1><strong><%= member.length %> </strong></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah laki-laki</h5>
+                            <h1><strong><%= member.filter(mb => mb.jenis_kelamin == "L").length %> </strong></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah perempuan</h5>
+                            <h1><strong><%= member.filter(mb => mb.jenis_kelamin == "P").length %> </strong></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah paket</h5>
+                            <h1><strong>34</strong></h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- person card section -->
+    <!-- section yang berisi daata card person -->
+    <div class="contaier-fluid person-section">
+        <div class="container py-5">
+            <div class="wapper d-flex justify-content-between align-items-center">
+                <h2>Daftar semua Member </h2>
+                <a href="./create/member" class="btn btn-success me-3">Tambah <i class="bi bi-person-plus-fill"></i></a>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row row-cols-md-4 row-cols-sm-2 gy-5">
+
+
+                <div class="col">
+                    <div class="card border-dark" style="width: 18rem;">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <strong class="mb-0">Zidan Putra Rahman</strong>
+                                <a href="#" class="btn btn-danger btn-sm">X</a>
+                            </li>
+                        </ul>
+                        <div class="card-body">
+                            <h1 class="text-center"><strong><i class="bi bi-person-square"></i></strong></h1>
+                            <strong><i class="bi bi-telephone-fill"></i> 08767676767</strong>
+                            <p class="mb-0"><i class="bi bi-geo-alt-fill"></i> bagorejo, srono</p>
+                            <p><i class="bi bi-gender-male"></i> Laki-laki</p> <!--nanti akan dijadikan pilhan utnuk loonya -->
+                            <a href="#" class="btn btn-sm btn-primary">Edit</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <% member.forEach(member => { %>
+                    <div class="col">
+                        <div class="card border-dark" style="width: 18rem;">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <strong class="mb-0"><%- member.nama %> </strong>
+                                    <% if (session.role != "kasir") { %>
+                                        <button  class="btn btn-sm btn-danger btn-delete" data-idMember="<%- member.id %> ">X</button>
+                                        
+                                    <% } %>
+                                </li>
+                            </ul>
+                            <div class="card-body">
+                                <h1 class="text-center"><strong><i class="bi bi-person-square"></i></strong></h1>
+                                <strong><i class="bi bi-telephone-fill"></i> <%- member.tlp  %> </strong>
+                                <p class="mb-0"><i class="bi bi-geo-alt-fill"></i><%= member.alamat %> </p>
+                                <% if (member.jenis_kelamin == 'L') { %>
+                                    <p><i class="bi bi-gender-male"></i> Laki-laki</p>
+                                <% } else if(member.jenis_kelamin == 'P'){%>
+                                    <p><i class="bi bi-gender-female"></i> Perempuan</p>
+                                <% } %>
+                                
+                                <% if (session.role != "kasir") { %>
+                                    <a href="update/member/<%= member.id %> " class="btn btn-sm btn-primary" >Edit</a>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %> 
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let containerMember = document.querySelector('.person-section');
+        containerMember.addEventListener('click', function (e) {
+            if (e.target.className == 'btn btn-sm btn-danger btn-delete') { //ini adalah daftar class untuk tombol hapus, saya masuakn semua class karena saya sedang terburu2 dan aras2en
+                console.log(e.target.parentElement.parentElement.parentElement);
+
+                idMember = e.target.getAttribute('data-idMember');
+                if (confirm('yakin ingin menghapus data ini??')) {
+                    //untuk menyembunyikan element
+                    e.target.parentElement.parentElement.parentElement.parentElement.style.display = 'none'; //untuk mendapatkan parent atas yang saya inginkan
+
+                    fetch(`http://localhost:8080/member/${idMember}`, { method: 'DELETE' })
+                        .then(res => alert('data telah dihapus'))
+                        .catch(err => alert("data gagal dihapus"));
+                }
+            }
+        })
+    </script>

@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="3_member.css">
+    <style>
+        .wapper{
+            border-bottom: 3px solid balck;
+        }
+        .title-section{
+          background-color: #9e8cff;
+        }
+    </style>
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light" >
+        <div class="container">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                <a class="nav-link active" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">User</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">Member</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">Paket</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">transaksi</a>
+                </li>
+            </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- title section -->
+    <div class="container-fluid title-section">
+        <div class="container pt-5 pb-5">
+            <h1>Halaman daftar paket <i class="bi bi-box-seam"></i></h1>
+            <small >halaman tempat untuk mengatur semua paket pada setiap outlet</small>
+        </div>
+    </div>
+
+    <!-- card general info section -->
+    <div class="card-section container-fluid">
+        <div class="container py-5">
+            <div class="row row-cols-md-4 row-cols-sm-2" >
+
+
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah paket</h5>
+                            <h1><strong><%= paket.length %> </strong></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah paket selimut</h5>
+                            <h1><strong><%= paket.filter(pk => pk.jenis == 'selimut').lenght || 0 %> </strong></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah paket kiloan</h5>
+                            <h1><strong><%= paket.filter(pk => pk.jenis == 'kiloan').lenght || 0 %></strong></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah paket bed cover</h5>
+                            <h1><strong><%= paket.filter(pk => pk.jenis == 'bed_cover').lenght || 0 %></strong></h1>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- paket section -->
+    <div class="contaier-fluid person-section">
+        <div class="container py-5 ">
+            <div class="wapper d-flex justify-content-between align-items-center">
+                <h2>Daftar semua paket (dibagi berdasarkan outlet)</h2>
+                <a href="#" class="btn btn-sm btn-success">Tambah <i class="bi bi-person-plus-fill"></i></a>
+            </div>
+            <hr>
+
+            <% outlet.forEach(outletArr => { %>
+                <div class="container-fluid mt-3">
+                    <h4><%= outletArr.nama %> </h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Nama paket</th>
+                              <th scope="col">Jenis</th>
+                              <th scope="col">Harga</th>
+                              <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% outletArr.paket.forEach((paketArr,i) => { %>
+                                <tr>
+                                    <td><%= i %> </td>
+                                    <td><%= paketArr.nama_paket %> </td>
+                                    <td><%= paketArr.jenis %> </td>
+                                    <td><%- paketArr.harga %></td>
+                                    <td>
+                                        <a href="update/paket/<%= paketArr.id %> " class="btn btn-sm btn-primary">Edit</a> | 
+                                        <button  class="btn btn-sm btn-danger btn-delete" data-idPaket="<%=  paketArr.id %> ">Hapus</button>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            <% }) %>
+
+        </div>
+    </div>
+
+    <!-- untuk footer -->
+    <footer>
+        <div class="container-fuild p-3 mt-5 bg-secondary ">
+            <div class="d-flex justify-content-center align-items-center"><p class="mb-0">create by me</p></div>
+            
+        </div>
+    </footer>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script>
+        let containerpaket = document.querySelector('.person-section');
+            containerpaket.addEventListener('click', function (e) {
+                if (e.target.className == 'btn btn-sm btn-danger btn-delete') { //ini adalah daftar class untuk tombol hapus, saya masuakn semua class karena saya sedang terburu2 dan aras2en
+                    console.log(e.target.parentElement.parentElement);
+
+                    idPaket = e.target.getAttribute('data-idPaket');
+                    if (confirm('yakin ingin menghapus data ini??')) {
+                        //untuk menyembunyikan element
+                        e.target.parentElement.parentElement.style.display = 'none'; //untuk mendapatkan parent atas yang saya inginkan
+
+                        fetch(`http://localhost:8080/paket/${idPaket}`, { method: 'DELETE' })
+                            .then(res => alert('data telah dihapus'))
+                            .catch(err => alert("data gagal dihapus"));
+                    }
+                }
+            })
+    </script>
+    </body>
+</html>

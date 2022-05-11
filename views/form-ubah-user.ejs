@@ -1,0 +1,94 @@
+
+    <style>
+        .ttl{
+            border-bottom: 3px solid #9e8cff;
+        }
+        .harga-total{
+            color: #340086
+        }
+        .total{
+            border-bottom: 2px solid #340086;
+        }
+        .title-section{
+            background-color: #9e8cff;
+        }
+    </style>
+
+
+    <!-- title section -->
+    <div class="container-fluid title-section">
+        <div class="container pt-5 pb-5">
+            <h1>Halaman edit user</h1>
+            <small >halaman untuk mengubah user user oleh admin</small>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="container py-4">
+            <h2 class="ttl d-inline-block">Silahkan isi formulir dibawah ini</h2>
+        </div>
+    </div>
+
+    <% let user = data.user %> 
+    <!--untuk form-->
+    <div class="container-fluid form-init">
+        <div class="container">
+            <form action="../../proses/update/user/<%= user.id %>" method="post">
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <label for="nama">Nama  :</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" name="nama" id="nama" value="<%= user.nama %>">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <label for="username">Username  :</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" name="username" id="username" value="<%= user.username %> ">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <label for="password">Password  :</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="password" class="form-control" name="password" id="password" placeholder="kosongi jika tidak ingin mengubah password">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <label for="id_outlet">Id outlet  :</label>
+                    </div>
+                    <div class="col-md-10">
+                        <select class="form-select" name="id_outlet">
+                            <% outlet.forEach(ol => { %>
+                                <option value="<%= ol.id %> " <%- (ol.id == user.id_outlet) ? "selected" : "" %> ><%= ol.nama %> : <%= ol.id %>  </option>
+                            <% }) %>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <label for="role">Role  :</label>
+                    </div>
+                    <div class="col-md-10">
+                        <select class="form-select" name="role">
+                            <option value="admin" <%- (user.role == "admin" ) ? "selected" : "" %> >Admin</option>
+                            <option value="kasir" <%- (user.role == "kasir" ) ? "selected" : "" %> >Kasir</option>
+                            <option value="owner" <%- (user.role == "owner" ) ? "selected" : "" %> >Owner</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <div class="submit">
+                        <button class="btn btn-success"><strong>Submit </strong><i class="bi bi-arrow-up-right"></i></button>
+                    </div>
+                </div>
+                <input type="hidden" name="usernameLama" value="<%- user.usernameLama? user.usernameLama : user.username %> ">
+            </form>
+        </div>
+
+    </div>

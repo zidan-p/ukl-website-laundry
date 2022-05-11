@@ -1,0 +1,129 @@
+    <nav class="navbar navbar-expand-lg navbar-light" >
+        <div class="container">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <% let role = session.role %>
+
+
+                <% if (role == "admin") { %>
+
+                    <li class="nav-item">
+                    <a class="nav-link
+                        <% if(activeLink == "home"){ %>
+                        <%= "active"; %>
+                        <% }%>
+                    "
+                        href="/app/"
+                        >
+                    Home</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link
+                        <% if(activeLink == "user"){ %>
+                        <%= "active"; %>
+                        <% }%>
+                    "
+                        href="/app/user"
+                        >
+                    User</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link
+                        <% if(activeLink == "member"){ %>
+                        <%= "active"; %>
+                        <% }%>
+                    "
+                        href="/app/member"
+                        >
+                    Member</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link
+                        <% if(activeLink == "paket"){%>
+                        <%= "active"; %>
+                        <% } %> 
+                    "
+                        href="/app/paket"
+                        >
+                    Paket</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link
+                        <% if(activeLink == "transaksi"){ %>
+                        <%= "active"; %>
+                        <% } %>
+                    "
+                        href="/app/transaksi"
+                        >
+                    transaksi</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link
+                        <% if(activeLink == "outlet"){ %>
+                        <%= "active"; %>
+                        <% } %>
+                    "
+                        href="/app/outlet"
+                        >
+                    outlet</a>
+                    </li>
+                
+                <% }else if(role == "kasir"){ %>
+                    <li class="nav-item">
+                        <a class="nav-link
+                            <% if(activeLink == "home"){ %>
+                            <%= "active"; %>
+                            <% }%>
+                        "
+                            href="/app/"
+                            >
+                        Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link
+                            <% if(activeLink == "member"){ %>
+                            <%= "active"; %>
+                            <% }%>
+                        "
+                            href="/app/member"
+                            >
+                        Member</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link
+                            <% if(activeLink == "transaksi"){ %>
+                            <%= "active"; %>
+                            <% } %>
+                        "
+                            href="/app/transaksi"
+                            >
+                        transaksi</a>
+                    </li>
+
+                <% } else if(role == "owner") { %>
+                    <li class="nav-item">
+                        <a class="nav-link
+                            <% if(activeLink == "home"){ %>
+                            <%= "active"; %>
+                            <% }%>
+                        "
+                            href="/app/"
+                            >
+                        Home</a>
+                    </li>
+
+                <% } %> 
+
+                <li class="nav-item ms-1">
+                    <button class="p-2" style="border: none ;border-bottom: 2px solid #340086; outline: none; background-color: white;">
+                        <%= session.username %> 
+                    </button>
+                </li>
+            </ul>
+            </div>
+        </div>
+    </nav>

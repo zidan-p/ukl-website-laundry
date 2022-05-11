@@ -1,0 +1,63 @@
+------ untuk mengatasi constrain foreign bisa baca stacoverflow berikut -------
+https://stackoverflow.com/questions/67984198/sequelize-disable-creation-of-foreign-key-constraint
+
+
+
+
+
+
+
+
+
+//test, cek daftar user
+app.get('/user', async (req,res) => {
+    let result = await loadUsers();
+    res.json({
+        users: result
+    })
+});
+
+//tambah user
+app.post('/user', async (req, res) => {
+    let info = await addUser(req.body);
+    if(info){
+        res.json({msg: "data berhasul dimasukan"})
+    }else{ res.json({msg: info})}
+
+});
+
+//edit user
+app.put('/user/:id', async (req, res) => {
+    let info = await updateUser({id : req.params.id, ...req.body});
+    if(info){
+        res.json({msg: "data berhasil dimasukan"})
+    }else{res.json({msg: "data gagal di update"})}
+    // res.json({id : req.params.id, ...req.body})
+});
+
+//hapus user
+app.delete('/user/:id', async (req,res) => {
+    let result = await deleteUser(req.params.id);
+    res.json({result});
+    // if(result.berhasil){
+    //     res.json({result})
+    // }else{ res.json({result})}
+});
+
+kode di atas adalah kode untuk mengecekan saja,
+jadi awalnya saya bingung memilih, apakah harus memisah 
+antara route dengan fungsi utiliesnya (sejenis fungsi untuk pekerjaan tertentu).
+mula saya pisah, tapi setelah membuat lebih banyak baris kode dengan
+banyak sekali error, saya memutuskan untuk menggabungkan antara route
+dengan utiliesnya.
+ada beberapa faktor
+    1. setiap fungsi yang berhubungan dengan database pasti
+       merupakan sebuah promise, sehingga saya akn lebih sering menulis
+       async dan await
+    2. error handlenya akan semakin rumit, karena antara route dan utilities
+       memiliki hadle tersendiri
+       [note: disini saya masih belum memahami bagai mana error handle bekerja]
+    3. fungsi utilies hanya sedikit, jadi kan sangat merepotkan
+       bagi saya bila harus mengaturnya satu2
+
+insert into tb_transaksi values ('','','','','2022-04-15','2022-04-15','2022-04-15','','','','baru','dibayar','');

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test untuk blabalbal</title>
+</head>
+<body>
+    <form action="test.html" method="get" >
+        <p>masukan pilihan anda</p>
+        <input name="check1" type="checkbox" value="1" id="cek1" class="check1" data-nama="nama">
+        <label for="cek1">ini bernilai 1</label>
+        <input name="check1" type="checkbox" value="2" id="cek2" class="check1" data-nama="alamat">
+        <label for="cek2">ini bernilai 1</label>
+        <input name="check1" type="checkbox" value="3" id="cek3" class="check1" data-nama="telepon">
+        <label for="cek3">ini bernilai 1</label>
+
+        <button type="submit">cek get</button>
+
+        <div class="container-input">
+
+        </div>
+        <br><br><br>
+        <input type="text" name="texts" id="id1">
+
+
+
+
+        <script>
+            let checkContainer = [];
+            let listInput = [];
+            let containerInput = document.querySelector('.container-input')
+
+            let check1 = document.querySelectorAll('.check1');
+            check1.forEach(arr => {
+                arr.addEventListener('change',function(){
+                    if(arr.checked){
+                        checkContainer.push(arr.value);
+                        addInput(arr.getAttribute('data-nama'), arr.value)
+                    }else{
+                        removeOne(checkContainer, arr.value)
+                        removeInput(arr.value)
+                    }
+                    console.log(checkContainer);
+                })
+            })
+
+
+            // fungsi untuk menhapus suatu nilai tertentu array
+            function removeOne(arr,item){
+                for( var i = 0; i < arr.length; i++){  
+                    if ( arr[i] === item) { 
+                        arr.splice(i, 1); 
+                        i--; 
+                    }
+                }
+            }
+
+            //sama seperti diatas tapi untuk array 2 dimensi
+            function removeOne2d(arr,item){
+                for( var i = 0; i < arr.length; i++){  
+                    if ( arr[i][0] === item) { 
+                        arr.splice(i, 1); 
+                        i--; 
+                    }
+                }
+            }
+
+            //fungsi untuk mendapatkan nilai array ke 2
+            function getSecond(arr){
+                return arr.map(ar=> ar[1])
+            }
+
+
+            //fungsi untukmenambaha input pada container input
+            function addInput(nmInput, val){
+                listInput.push([val,`${nmInput} : <input type="text" name="check2"><br>` ]) ;
+                containerInput.innerHTML = listInput.map(ar=> ar[1]).join('');
+            }
+
+            //fungsi untuk menhapus nilai tertentu pada container inpu
+            function removeInput(val){
+                removeOne2d(listInput,val)
+                containerInput.innerHTML = listInput.map(ar=> ar[1]).join('');
+            }
+
+
+            let inp1 = document.querySelector('#id1')
+            inp1.addEventListener('keyup',() => {
+                console.log("hahahah");
+            })
+        </script>
+    </form>
+</body>
+</html>

@@ -1,0 +1,221 @@
+
+    <style>
+        .ttl{
+            border-bottom: 3px solid #9e8cff;
+        }
+        .harga-total{
+            color: #340086
+        }
+        .total{
+            border-bottom: 2px solid #340086;
+        }
+        .title-section{
+            background-color: #9e8cff;
+        }
+    </style>
+
+
+    <!-- title section -->
+    <div class="container-fluid title-section">
+        <div class="container pt-5 pb-5">
+            <h1>Halaman tambah transaksi <i class="bi bi-cart-plus"></i></h1>
+            <small >halaman untuk emnambah transaksi oleh admond</small>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="container py-4">
+            <h2 class="ttl d-inline-block">Silahkan isi bidah dibawah ini</h2>
+        </div>
+    </div>
+
+    <% let tr = data.transaksi %> 
+
+    <form action="../../proses/update/transaksi/<%= tr.id %>" method="post">
+    <!-- untuk member -->
+    <div class="conatiner-fluid">
+        <div class="container py-4">
+            <h4><strong>Member</strong></h4>
+            <table class="table table-member">
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>No telp</th>
+                        <th>Alamat</th>
+                        <th>Jenis Kelamin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><%= tr.member.nama %> </td>
+                        <td><%= tr.member.tlp %> </td>
+                        <td><%= tr.member.alamat %> </td>
+                        <% if ( tr.member.jenis_kelamin == "L" ) { %>
+                            <td>Laki-laki</td>
+                        <% } else { %>
+                            <td>Perempuan</td>
+                        <% } %> 
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- untuk input jumlah paket -->
+    <!-- jangan lupa untuk membuat validasi -->
+    <div class="container-fluid">
+        <div class="container py-4">
+            <h4 ><strong>Jumlah barang</strong></h4>
+
+            <table class="table container-paket">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nama paket</th>
+                        <th scope="col">Harga</th>
+                        <th scope="col">Jumlah</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <% tr.detail_transaksi.forEach((dtr,i)=> { %>
+                        <tr>
+                            <td><%= i+1 %> </td>
+                            <td><%= dtr.paket.nama_paket %> </td>
+                            <td><%= dtr.paket.harga %> </td>
+                            <td>
+                                <input type="number" data-harga="<%= dtr.paket.harga %>" name="qty[]" data-id="123" value="<%= dtr.qty %>" class="form-control">
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- untuk tanggal -->
+    <div class="container-fluid">
+        <div class="container py-4">
+            <h4><strong>Tanggal transaksi</strong></h4>
+
+            <div class="mt-2">
+                <label for="">Tanggal Bayar</label>
+                <input type="date" id="bayar" name="tgl_bayar" value="<%= tr.tgl_bayar.slice(0,10) %>">
+            </div>
+            <div class="mt-2">
+                <label for="tenggat">Batas waktu</label>
+                <input type="date" id="tenggat" name="batas_waktu" value="<%= tr.batas_waktu.slice(0,10) %>"> <!--formatnya yyyy/dd/mm-->
+            </div>
+            <div class="mt-2">
+                <label for="tg;">Tanggal transaksi</label>
+                <input type="date" id="tgl" name="tgl" value="<%= tr.tgl.slice(0,10) %>">
+            </div>
+        </div>
+    </div>
+
+
+    <!-- untuk biaya tambahan -->
+    <div class="container-fluid">
+        <div class="container py-4">
+            <h4><strong>Biaya transaksi</strong></h4>
+
+            <div class="form">
+                <div class="mb-3 row">
+                    <label for="staticbiaya" class="col-sm-2 col-form-label">Biaya Tambahan</label>
+                    <div class="col-sm-10">
+                      <input name="biaya_tambahan" type="number" class="form-control" id="staticbiaya" value="<%= tr.biaya_tambahan %>">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="pajak" class="col-sm-2 col-form-label">Pajak</label>
+                    <div class="col-sm-10">
+                      <input type="number" class="form-control" id="pajak" name="pajak" value="<%= tr.pajak %>">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="diskon" class="col-sm-2 col-form-label">Diskon <small>(dalam persen)</small></label>
+                    <div class="col-sm-10">
+                      <input name="diskon" type="number" class="form-control" id="diskon" placeholder="dalam persen" value="<%= tr.diskon * 100 %>">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- untuk status -->
+    <div class="container-fluid">
+        <div class="container py-4">
+            <h4><strong>Status</strong></h4>
+            <div class="form">
+                <div class="mb-3 row">
+                    <label  class="col-sm-2 col-form-label">Dibayar</label>
+                    <div class="col-sm-10">
+                        <select class="form-select" name="dibayar">
+                            <option value="belum_dibayar" <%= (tr.dibayar == "belum_dibayar")? "selected" : "" %> >Belum bayar</option>
+                            <option value="dibayar" <%= (tr.dibayar == "dibayar")? "selected" : "" %>>Dibayar</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label  class="col-sm-2 col-form-label">Status</label>
+                    <div class="col-sm-10">
+                        <select class="form-select" name="status" >
+                            <option value="baru" <%= (tr.status == "baru")? "selected" : "" %> >Baru</option>
+                            <option value="proses" <%= (tr.status == "proses")? "selected" : "" %>  >Proses</option>
+                            <option value="selesai" <%= (tr.status == "selesai")? "selected" : "" %>  >Selesai</option>
+                            <option value="diambil" <%= (tr.status == "diambil")? "selected" : "" %>  >Diambil</option>
+                          </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- untuk total -->
+    <div class="conatiner-fluid">
+        <div class="container py-4">
+            <div class="d-flex justify-content-between">
+                <div class="total">
+                    <h3>
+                        total : <span class="harga-total">200.000</span>
+                    </h3>
+                </div>
+                <div class="submit">
+                    <button class="btn btn-success"><strong>Submit </strong><i class="bi bi-arrow-up-right"></i></button>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+
+    </form>
+
+    <script>
+        let paket = [];
+        let containerPaket = document.querySelector('.container-paket tbody');
+
+        //untuk menghitung nilai total
+        function renderTotal(){
+            let total = 0;
+            document.querySelectorAll('input[type="number"]:not([name="diskon"])').forEach(inp => {
+                if(inp.getAttribute("name") == "qty[]"){
+                    total += (parseInt(inp.getAttribute("data-harga")) * parseInt(inp.value))
+                }else{
+                    total += parseInt(inp.value == '' ? 0 : inp.value);
+                }
+                inp.addEventListener('change', function(e){
+                    renderTotal()
+                })
+
+
+            })
+            console.log("total 1 : "+total)
+            total = total * (100 - parseInt(document.getElementById('diskon').value))/100
+            console.log("total 2 : "+total)
+            document.querySelector('.harga-total').innerHTML = total;
+            console.log(typeof total);
+            total = 0;
+        }
+        renderTotal();
+
+    </script>
