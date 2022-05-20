@@ -247,6 +247,8 @@
         let info = document.querySelector("#info-table") //untuk wada informasi transaksi
         let detail = document.querySelector('#detail-table') //untuk wadah detail transaksi
         let containerCard = document.querySelector('.container-card-re'); //elemet yng akan diberi event listener
+        let tr = JSON.parse('<%- JSON.stringify(transaksi) %>'); // semua transaksi yang ada
+        let judul = document.querySelector(".modal-title");
         containerCard.addEventListener('click',(e)=>{
 
             //untuk menampilkan moddal
@@ -254,8 +256,9 @@
                 console.log(e.target)
 
                 let id = e.target.getAttribute('data-idTransaksi');
-                let tr = JSON.parse('<%- JSON.stringify(transaksi) %>');
+                
                 let trt = tr.find(tr => tr.id == id);
+                console.log(trt);
 
                 //untuk info pada transaksi
                 let strInfo = `
@@ -273,15 +276,15 @@
                     </tr>
                     <tr>
                         <td>tanggal :</td>
-                        <td>${trt.tgl.slice(0,10)}</td>
+                        <td>${trt.tgl}</td>
                     </tr>
                     <tr>
                         <td>batas waktu :</td>
-                        <td>${trt.batas_waktu.slice(0,10)}</td>
+                        <td>${trt.batas_waktu}</td>
                     </tr>
                     <tr>
                         <td>tanggal bayar :</td>
-                        <td>${trt.tgl_bayar.slice(0,10)}</td>
+                        <td>${trt.tgl_bayar}</td>
                     </tr>
                     <tr>
                         <td>biaya tambahan : </td>
@@ -306,10 +309,10 @@
                     ` 
                 
                 //untuk detai paket transaksi
-                let strDetail = trt.detail_transaksi.map((dt,i) => {
+                let strDetail = trt.detail_transaksi.map((dt) => {
                     return `
                     <tr>
-                        <td scope="row">${i+1}</td>
+                        <td scope="row">${1}</td>
                         <td>${dt.paket.nama_paket}</td>
                         <td>${dt.paket.jenis}</td>
                         <td>${dt.qty}</td>
@@ -321,6 +324,8 @@
                 console.log([strInfo,strDetail])
                 //untuk mengubah info dan detail
                 
+                judul.innerHTML = trt.tgl.slice(0,10);
+
                 info.innerHTML = strInfo;
                 console.log('innerhtml info diubah')
 

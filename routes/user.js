@@ -101,14 +101,14 @@ app.post('/', async (req, res) => {
             .then(result => {
                 res.json({
                     result, 
-                    msg: "data berhasil ditambahlan",
+                    msg: "data berhasil ditambahkan",
                     berhasil: true
                 })
             })
             .catch(err => {
                 res.json({
                     err, 
-                    msg: "data gagal ditambahlan",
+                    msg: "data gagal ditambahkan",
                     berhasil: false
                 })
             })   
@@ -187,4 +187,7 @@ app.delete('/:id', async (req,res) => {
 
 
 module.exports = app;
+
+
+//select * from user
 

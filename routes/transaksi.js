@@ -231,6 +231,7 @@ app.delete('/:id', async (req,res) => {//jangan lupa untuk memberika fungsi untu
             msg: "data berhasil dihapus",
             berhasil: true
         })
+        
     } catch (err) {
         res.json({
             err,

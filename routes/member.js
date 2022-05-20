@@ -12,7 +12,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //import model
 const model = require("../models/index");
-const { deleteUser } = require("../utils/user");
 const tb_member = model.tb_member;
 
 // function utilities

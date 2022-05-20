@@ -304,5 +304,27 @@ app.post('/proses/update/:tb/:id', async (req,res) => {
     }
 })
 
+//untuk print
+app.get('/print', async (req, res) => {
+    let {msg, transaksi} = await axios.get(`http://localhost:8080/transaksi`)
+        .then(result => {
+            return result.data
+        })
+        .catch(err => {
+            console.log(err);
+            return err
+        })
+
+    if(msg == {}){
+        res.json({msg})
+    }else{
+        res.render('print', {
+            layout: false,
+            transaksi,
+            session : req.session
+        })
+    }
+})
+
 module.exports = app;
 

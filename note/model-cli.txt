@@ -7,6 +7,8 @@ sequelize model:create --name tb_paket --attributes id:integer,id_outlet:integer
 sequelize model:create --name tb_outlet --attributes id:integer,nama:string,alamat:text,tlp:string
 sequelize model:create --name tb_user --attributes id:integer,nama:string,username:string,password:text,id_outlet:integer,role:enum:'{admin,kasir,owner}'
 
+sequelize db:migrate
+
 
 
 

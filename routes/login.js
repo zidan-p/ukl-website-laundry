@@ -36,6 +36,7 @@ app.post('/', async (req,res) => {
         where: {username : username}
     })
         .then(resp => {
+            
             //cek
             console.log(resp);
             console.log(resp.length == 1);

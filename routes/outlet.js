@@ -14,6 +14,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const model = require("../models/index");
 const tb_db = model.tb_outlet; //menggunakan tabel outleet
 const tb_paket = model.tb_paket;
+const tb_transaksi = model.tb_transaksi;
+const tb_user = model.tb_user;
+
 
 // function utilities
 let duplicateCheck = async (username) => { //tidak diguakan karena outlet sudah memiliki id
@@ -124,6 +127,14 @@ app.put('/:id', async (req, res) => {
 
 //hapus outlet
 app.delete('/:id', async (req,res) => { //jangan lupa untuk memberika fungsi untuk menghapus data2 lain
+    let id = req.params.id;
+    // let result1 = await tb_paket.update({id_outlet : null}, {where: {id_outlet : id}});
+    // let result2 = await tb_transaksi.update({id_outlet : null}, {where: {id_outlet : id}});
+    // let result3 = await tb_user.update({id_outlet : null}, {where: {id_outlet : id}});
+
+
+
+
     await tb_db.destroy({where: {id: req.params.id}})
         .then((result) => {
             res.json({
@@ -136,7 +147,7 @@ app.delete('/:id', async (req,res) => { //jangan lupa untuk memberika fungsi unt
             res.json({
                 err,
                 msg: "data gagal dihapus",
-                berhasil: true
+                berhasil: false
             })
         })
 });

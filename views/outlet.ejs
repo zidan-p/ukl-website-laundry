@@ -62,7 +62,7 @@
                             <strong><i class="bi bi-telephone-fill"></i> <%= outlet_arr.tlp %> </strong>
                             <p class=""><i class="bi bi-geo-alt-fill"></i> <%= outlet_arr.alamat %> </p>
                             <a href="update/outlet/<%= outlet_arr.id %> " class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i> Edit</a>
-                            <button class="btn btn-sm btn-primary button-mdl" data-idOutlet="<%= outlet_arr.id %> " data-bs-toggle="modal" data-bs-target="#modalinfo">
+                            <button class="btn btn-sm btn-primary button-mdl" data-idOutlet="<%= outlet_arr.id %>" data-bs-toggle="modal" data-bs-target="#modalinfo">
                                 <i class="bi bi-info-circle"></i> Info
                             </button>
                         </div>
@@ -152,7 +152,14 @@
             e.target.parentElement.parentElement.parentElement.parentElement.style.display = 'none'; //untuk mendapatkan parent atas yang saya inginkan
 
             fetch(`http://localhost:8080/outlet/${idOutlet}`, {method: 'DELETE'})
-              .then(res => alert('data telah dihapus'))
+              .then(res => {alert('data telah dihapus'); return res.json()})
+              .then(data => {
+                if(data){
+                  alert("data telah dihapus");
+                }else{
+                  
+                }
+              })
               .catch(err => alert("data gagal dihapus"));
           }
         }
